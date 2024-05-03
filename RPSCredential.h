@@ -8,9 +8,9 @@
 #include <propkey.h>
 #include "common.h"
 #include "dll.h"
-#include "resource.h"
 #include <stdlib.h>
 
+#define IDB_TILE_IMAGE     101
 
 class RPSCredential : public ICredentialProviderCredential2, ICredentialProviderCredentialWithFieldOptions
 {
