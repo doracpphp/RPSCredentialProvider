@@ -97,9 +97,9 @@ public:
     HRESULT generateRPS();
     long                                    _cRef;
     CREDENTIAL_PROVIDER_USAGE_SCENARIO      _cpus;                                          // 列挙された使用シナリオ
-    CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR    _rgCredProvFieldDescriptors[SFI_NUM_FIELDS];    // タイルの各フィールドの型と名前を保持する配列
-    FIELD_STATE_PAIR                        _rgFieldStatePairs[SFI_NUM_FIELDS];             // タイルの各フィールドの状態を保持する配列
-    PWSTR                                   _rgFieldStrings[SFI_NUM_FIELDS];                // 各フィールドの文字列値を保持する配列。これは_rgCredProvFieldDescriptorsで保持されるフィールドの名前とは異なります
+    CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR    _rgCredProvFieldDescriptors[RFI_NUM_FIELDS];    // タイルの各フィールドの型と名前を保持する配列
+    FIELD_STATE_PAIR                        _rgFieldStatePairs[RFI_NUM_FIELDS];             // タイルの各フィールドの状態を保持する配列
+    PWSTR                                   _rgFieldStrings[RFI_NUM_FIELDS];                // 各フィールドの文字列値を保持する配列。これは_rgCredProvFieldDescriptorsで保持されるフィールドの名前とは異なります
     PWSTR                                   _pszUserSid;
     PWSTR                                   _pszQualifiedUserName;                          // 認証バッファをパックするために使用されるユーザー名
     ICredentialProviderCredentialEvents2*    _pCredProvCredentialEvents;                    // フィールドの更新

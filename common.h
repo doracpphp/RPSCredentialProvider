@@ -1,16 +1,16 @@
 ﻿#pragma once
 #include "helpers.h"
 
-// クレデンシャル・プロバイダのタイルの各フィールドのインデックス。
+// Credential Providerのタイルの各フィールドのインデックス。
 
 enum RPS_FIELD_ID
 {
-    SFI_TILEIMAGE         = 0,
-    SFI_LARGE_TEXT        = 1,
-    SFI_PASSWORD          = 2,
-    SFI_SUBMIT_BUTTON     = 3,
-    SFI_COMBOBOX          = 4,
-    SFI_NUM_FIELDS        = 5,
+    RFI_TILEIMAGE         = 0,
+    RFI_LARGE_TEXT        = 1,
+    RFI_PASSWORD          = 2,
+    RFI_SUBMIT_BUTTON     = 3,
+    RFI_COMBOBOX          = 4,
+    RFI_NUM_FIELDS        = 5,
 };
 
 // 最初の値はタイルがいつ表示されているか（選択されているか、選択されていないか）を示し、
@@ -22,7 +22,7 @@ struct FIELD_STATE_PAIR
     CREDENTIAL_PROVIDER_FIELD_INTERACTIVE_STATE cpfis;
 };
 
-//クレデンシャル・プロバイダは、フィールド状態のペアとフィールド記述子のさまざまな
+// Credential Providerは、フィールド状態のペアとフィールド記述子のさまざまな
 // 組み合わせでクレデンシャルをセットアップしたい場合があるため、これら2つの配列は分離されている。
 
 // フィールド状態の値は、フィールドが選択されたタイル、選択解除されたタイル、またはその両方に表示されるかどうかを示す。
@@ -41,11 +41,11 @@ static const FIELD_STATE_PAIR s_rgFieldStatePairs[] =
 // 3番目はフィールドの名前であり、フィールドに表示される値ではない。
 static const CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR s_rgCredProvFieldDescriptors[] =
 {
-    { SFI_TILEIMAGE,         CPFT_TILE_IMAGE,    L"Image",                      CPFG_CREDENTIAL_PROVIDER_LOGO  },
-    { SFI_LARGE_TEXT,        CPFT_LARGE_TEXT,    L"じゃんけんログイン"                                 },
-    { SFI_PASSWORD,          CPFT_PASSWORD_TEXT, L"パスワード"                                              },
-    { SFI_SUBMIT_BUTTON,     CPFT_SUBMIT_BUTTON, L"Submit"                                                     },
-    { SFI_COMBOBOX,          CPFT_COMBOBOX,      L"Combobox"                                                   },
+    { RFI_TILEIMAGE,     CPFT_TILE_IMAGE,    L"Image",  CPFG_CREDENTIAL_PROVIDER_LOGO  },
+    { RFI_LARGE_TEXT,    CPFT_LARGE_TEXT,    L"じゃんけんログイン"},
+    { RFI_PASSWORD,      CPFT_PASSWORD_TEXT, L"パスワード"},
+    { RFI_SUBMIT_BUTTON, CPFT_SUBMIT_BUTTON, L"Submit" },
+    { RFI_COMBOBOX,      CPFT_COMBOBOX,      L"Combobox" },
 };
 
 static const PWSTR s_rgComboBoxStrings[] =

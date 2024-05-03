@@ -24,10 +24,10 @@ RPSCredential::RPSCredential():
 
 RPSCredential::~RPSCredential()
 {
-    if (_rgFieldStrings[SFI_PASSWORD])
+    if (_rgFieldStrings[RFI_PASSWORD])
     {
-        size_t lenPassword = wcslen(_rgFieldStrings[SFI_PASSWORD]);
-        SecureZeroMemory(_rgFieldStrings[SFI_PASSWORD], lenPassword * sizeof(*_rgFieldStrings[SFI_PASSWORD]));
+        size_t lenPassword = wcslen(_rgFieldStrings[RFI_PASSWORD]);
+        SecureZeroMemory(_rgFieldStrings[RFI_PASSWORD], lenPassword * sizeof(*_rgFieldStrings[RFI_PASSWORD]));
     }
     for (int i = 0; i < ARRAYSIZE(_rgFieldStrings); i++)
     {
@@ -70,19 +70,19 @@ HRESULT RPSCredential::Initialize(CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus,
     // UIのテキストを設定する
     if (SUCCEEDED(hr))
     {
-        hr = SHStrDupW(L"じゃんけんログイン", &_rgFieldStrings[SFI_LARGE_TEXT]);
+        hr = SHStrDupW(L"じゃんけんログイン", &_rgFieldStrings[RFI_LARGE_TEXT]);
     }
     if (SUCCEEDED(hr))
     {
-        hr = SHStrDupW(L"", &_rgFieldStrings[SFI_PASSWORD]);
+        hr = SHStrDupW(L"", &_rgFieldStrings[RFI_PASSWORD]);
     }
     if (SUCCEEDED(hr))
     {
-        hr = SHStrDupW(L"じゃんけんする", &_rgFieldStrings[SFI_SUBMIT_BUTTON]);
+        hr = SHStrDupW(L"じゃんけんする", &_rgFieldStrings[RFI_SUBMIT_BUTTON]);
     }
     if (SUCCEEDED(hr))
     {
-        hr = SHStrDupW(L"じゃんけん", &_rgFieldStrings[SFI_COMBOBOX]);
+        hr = SHStrDupW(L"じゃんけん", &_rgFieldStrings[RFI_COMBOBOX]);
     }
 
     //https://learn.microsoft.com/ja-jp/windows/win32/api/credentialprovider/nf-credentialprovider-icredentialprovideruser-getstringvalue
@@ -136,17 +136,17 @@ HRESULT RPSCredential::SetSelected(_Out_ BOOL *pbAutoLogon)
 HRESULT RPSCredential::SetDeselected()
 {
     HRESULT hr = S_OK;
-    if (_rgFieldStrings[SFI_PASSWORD])
+    if (_rgFieldStrings[RFI_PASSWORD])
     {
-        size_t lenPassword = wcslen(_rgFieldStrings[SFI_PASSWORD]);
-        SecureZeroMemory(_rgFieldStrings[SFI_PASSWORD], lenPassword * sizeof(*_rgFieldStrings[SFI_PASSWORD]));
+        size_t lenPassword = wcslen(_rgFieldStrings[RFI_PASSWORD]);
+        SecureZeroMemory(_rgFieldStrings[RFI_PASSWORD], lenPassword * sizeof(*_rgFieldStrings[RFI_PASSWORD]));
 
-        CoTaskMemFree(_rgFieldStrings[SFI_PASSWORD]);
-        hr = SHStrDupW(L"", &_rgFieldStrings[SFI_PASSWORD]);
+        CoTaskMemFree(_rgFieldStrings[RFI_PASSWORD]);
+        hr = SHStrDupW(L"", &_rgFieldStrings[RFI_PASSWORD]);
 
         if (SUCCEEDED(hr) && _pCredProvCredentialEvents)
         {
-            _pCredProvCredentialEvents->SetFieldString(this, SFI_PASSWORD, _rgFieldStrings[SFI_PASSWORD]);
+            _pCredProvCredentialEvents->SetFieldString(this, RFI_PASSWORD, _rgFieldStrings[RFI_PASSWORD]);
         }
     }
 
@@ -202,7 +202,7 @@ HRESULT RPSCredential::GetBitmapValue(DWORD dwFieldID, _Outptr_result_nullonfail
     HRESULT hr;
     *phbmp = nullptr;
 
-    if ((SFI_TILEIMAGE == dwFieldID))
+    if ((RFI_TILEIMAGE == dwFieldID))
     {
         HBITMAP hbmp = LoadBitmap(HINST_THISDLL, MAKEINTRESOURCE(IDB_TILE_IMAGE));
         if (hbmp != nullptr)
@@ -229,10 +229,10 @@ HRESULT RPSCredential::GetSubmitButtonValue(DWORD dwFieldID, _Out_ DWORD *pdwAdj
 {
     HRESULT hr;
 
-    if (SFI_SUBMIT_BUTTON == dwFieldID)
+    if (RFI_SUBMIT_BUTTON == dwFieldID)
     {
         // ComboBoxの隣に配置する
-        *pdwAdjacentTo = SFI_COMBOBOX;
+        *pdwAdjacentTo = RFI_COMBOBOX;
         hr = S_OK;
     }
     else
@@ -367,7 +367,7 @@ HRESULT RPSCredential::GetSerialization(_Out_ CREDENTIAL_PROVIDER_GET_SERIALIZAT
     ZeroMemory(pcpcs, sizeof(*pcpcs));
     PWSTR pwzProtectedPassword;
 
-    hr = ProtectIfNecessaryAndCopyPassword(_rgFieldStrings[SFI_PASSWORD], _cpus, &pwzProtectedPassword);
+    hr = ProtectIfNecessaryAndCopyPassword(_rgFieldStrings[RFI_PASSWORD], _cpus, &pwzProtectedPassword);
     if (SUCCEEDED(hr))
     {
         PWSTR pszDomain;
@@ -451,7 +451,7 @@ HRESULT RPSCredential::ReportResult(NTSTATUS ntsStatus,
     {
         if (_pCredProvCredentialEvents)
         {
-            _pCredProvCredentialEvents->SetFieldString(this, SFI_PASSWORD, L"");
+            _pCredProvCredentialEvents->SetFieldString(this, RFI_PASSWORD, L"");
             //再びじゃんけんの手を生成する
             generateRPS();
         }
@@ -478,7 +478,7 @@ HRESULT RPSCredential::GetFieldOptions(DWORD dwFieldID,
 {
     *pcpcfo = CPCFO_NONE;
 
-    if (dwFieldID == SFI_PASSWORD)
+    if (dwFieldID == RFI_PASSWORD)
     {
         *pcpcfo = CPCFO_ENABLE_PASSWORD_REVEAL;
     }

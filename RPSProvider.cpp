@@ -113,7 +113,7 @@ HRESULT RPSProvider::UnAdvise()
 HRESULT RPSProvider::GetFieldDescriptorCount(
     _Out_ DWORD *pdwCount)
 {
-    *pdwCount = SFI_NUM_FIELDS;
+    *pdwCount = RFI_NUM_FIELDS;
     return S_OK;
 }
 
@@ -126,7 +126,7 @@ HRESULT RPSProvider::GetFieldDescriptorAt(
     *ppcpfd = nullptr;
 
     // Verify dwIndex is a valid field.
-    if ((dwIndex < SFI_NUM_FIELDS) && ppcpfd)
+    if ((dwIndex < RFI_NUM_FIELDS) && ppcpfd)
     {
         hr = FieldDescriptorCoAllocCopy(s_rgCredProvFieldDescriptors[dwIndex], ppcpfd);
     }
