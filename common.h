@@ -44,7 +44,7 @@ static const CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR s_rgCredProvFieldDescriptors[]
     { RFI_TILEIMAGE,     CPFT_TILE_IMAGE,    L"Image",  CPFG_CREDENTIAL_PROVIDER_LOGO  },
     { RFI_LARGE_TEXT,    CPFT_LARGE_TEXT,    L"じゃんけんログイン"},
     { RFI_PASSWORD,      CPFT_PASSWORD_TEXT, L"パスワード"},
-    { RFI_SUBMIT_BUTTON, CPFT_SUBMIT_BUTTON, L"Submit" },
+    { RFI_SUBMIT_BUTTON, CPFT_SUBMIT_BUTTON, L"じゃんけんする" },
     { RFI_COMBOBOX,      CPFT_COMBOBOX,      L"Combobox" },
 };
 
