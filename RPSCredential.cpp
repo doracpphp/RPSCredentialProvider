@@ -46,8 +46,7 @@ HRESULT RPSCredential::generateRPS() {
         return E_UNEXPECTED;
     }
     srand(ts.tv_nsec ^ ts.tv_sec);
-    int r = rand();
-    _cpuHand = r % 3;
+    _cpuHand = rand() % 3;
     return hr;
 }
 // 渡されたフィールド情報で 1 つのクレデンシャルを初期化します。
@@ -396,15 +395,32 @@ HRESULT RPSCredential::GetSerialization(_Out_ CREDENTIAL_PROVIDER_GET_SERIALIZAT
                         // ログオンするために使用されるシリアライズされたクレデンシャルを作成した。
                         // シリアライズされたクレデンシャルの送信を試みなければならない。
                         *pcpgsr = CPGSR_RETURN_CREDENTIAL_FINISHED;
-                        if (_dwComboIndex != _cpuHand) {
+                        switch (((int)_dwComboIndex - _cpuHand + 3) % 3) {
+                        case 2:
+                            break;
+                        case 0:
+                            *pcpgsr = CPGSR_NO_CREDENTIAL_NOT_FINISHED;
+                            if (SUCCEEDED(SHStrDupW(L"引き分けです", ppwszOptionalStatusText))) {
+                                *pcpsiOptionalStatusIcon = CPSI_ERROR;
+                            }
+                            break;
+                        case 1:
                             *pcpgsr = CPGSR_NO_CREDENTIAL_NOT_FINISHED;
                             if (SUCCEEDED(SHStrDupW(L"じゃんけんに負けました", ppwszOptionalStatusText))) {
                                 *pcpsiOptionalStatusIcon = CPSI_ERROR;
                             }
+                            break;
+                        default:
+                            *pcpgsr = CPGSR_NO_CREDENTIAL_NOT_FINISHED;
+                            if (SUCCEEDED(SHStrDupW(L"エラー", ppwszOptionalStatusText))) {
+                                *pcpsiOptionalStatusIcon = CPSI_ERROR;
+                            }
+                            break;
                         }
                     }
                 }
             }
+            generateRPS();
             CoTaskMemFree(pszDomain);
             CoTaskMemFree(pszUsername);
         }
@@ -447,7 +463,7 @@ HRESULT RPSCredential::ReportResult(NTSTATUS ntsStatus,
         }
     }
     // If we failed the logon, try to erase the password field.
-    if (FAILED(HRESULT_FROM_NT(ntsStatus)))
+    if (FAILED(ntsStatus))
     {
         if (_pCredProvCredentialEvents)
         {
